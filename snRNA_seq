@@ -4,20 +4,25 @@ library(patchwork)
 
 sessionInfo()
 
-data_1 <- Read10X(WT_MI_D1_IR_1/outs/filtered_feature_bc_matrix) %>% CreateSeuratObject(min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = "MI_D1_IR_1")
-data_2 <- Read10X(WT_MI_D1_IR_2/outs/filtered_feature_bc_matrix) %>% CreateSeuratObject(min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = "MI_D1_IR_2")
-data_3 <- Read10X(WT_MI_D1_RR_1/outs/filtered_feature_bc_matrix) %>% CreateSeuratObject(min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = "MI_D1_RR_1")
-data_4 <- Read10X(WT_MI_D1_RR_2/outs/filtered_feature_bc_matrix) %>% CreateSeuratObject(min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = "MI_D1_RR_2")
-data_5 <- Read10X(WT_MI_D7_IR_1/outs/filtered_feature_bc_matrix) %>% CreateSeuratObject(min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = "MI_D7_IR_1")
-data_6 <- Read10X(WT_MI_D7_IR_2/outs/filtered_feature_bc_matrix) %>% CreateSeuratObject(min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = "MI_D7_IR_2")
-data_7 <- Read10X(WT_MI_D7_RR_1/outs/filtered_feature_bc_matrix) %>% CreateSeuratObject(min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = "MI_D7_RR_1")
-data_8 <- Read10X(WT_MI_D7_RR_2/outs/filtered_feature_bc_matrix) %>% CreateSeuratObject(min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = "MI_D7_RR_2")
-data_9 <- Read10X(WT_MI_D14_IR_1/outs/filtered_feature_bc_matrix) %>% CreateSeuratObject(min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = "MI_D14_IR_1")
-data_10 <- Read10X(WT_MI_D14_IR_2/outs/filtered_feature_bc_matrix) %>% CreateSeuratObject(min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = "MI_D14_IR_2")
-data_11 <- Read10X(WT_MI_D14_RR_1/outs/filtered_feature_bc_matrix) %>% CreateSeuratObject(min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = "MI_D14_"RR_1")
-data_12 <- Read10X(WT_MI_D14_RR_2/outs/filtered_feature_bc_matrix) %>% CreateSeuratObject(min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = "MI_D14_RR_2")
-data_13 <- Read10X(WT_Sham_1/outs/filtered_feature_bc_matrix) %>% CreateSeuratObject(min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = "Sham_1")
-data_14 <- Read10X(WT_Sham_2/outs/filtered_feature_bc_matrix) %>% CreateSeuratObject(min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = "Sham_2")
+name_list <- c("MI_D1_IR_1", "MI_D1_IR_2", "MI_D1_RR_1", "MI_D1_RR_2",
+               "MI_D7_IR_1", "MI_D7_IR_2", "MI_D7_RR_1", "MI_D7_RR_2",
+               "MI_D14_IR_1", "MI_D14_IR_2", "MI_D14_RR_1", "MI_D14_RR_2",
+               "Sham_1", "Sham_2")
+
+data_1 <- Read10X("WT_MI_D1_IR_1/outs/filtered_feature_bc_matrix") %>% CreateSeuratObject(project = name_list[1], min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = name_list[1])
+data_2 <- Read10X("WT_MI_D1_IR_2/outs/filtered_feature_bc_matrix") %>% CreateSeuratObject(project = name_list[2], min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = name_list[2])
+data_3 <- Read10X("WT_MI_D1_RR_1/outs/filtered_feature_bc_matrix") %>% CreateSeuratObject(project = name_list[3], min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = name_list[3])
+data_4 <- Read10X("WT_MI_D1_RR_2/outs/filtered_feature_bc_matrix") %>% CreateSeuratObject(project = name_list[4], min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = name_list[4])
+data_5 <- Read10X("WT_MI_D7_IR_1/outs/filtered_feature_bc_matrix") %>% CreateSeuratObject(project = name_list[5], min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = name_list[5])
+data_6 <- Read10X("WT_MI_D7_IR_2/outs/filtered_feature_bc_matrix") %>% CreateSeuratObject(project = name_list[6], min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = name_list[6])
+data_7 <- Read10X("WT_MI_D7_RR_1/outs/filtered_feature_bc_matrix") %>% CreateSeuratObject(project = name_list[7], min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = name_list[7])
+data_8 <- Read10X("WT_MI_D7_RR_2/outs/filtered_feature_bc_matrix") %>% CreateSeuratObject(project = name_list[8], min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = name_list[8])
+data_9 <- Read10X("WT_MI_D14_IR_1/outs/filtered_feature_bc_matrix") %>% CreateSeuratObject(project = name_list[9], min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = name_list[9])
+data_10 <- Read10X("WT_MI_D14_IR_2/outs/filtered_feature_bc_matrix") %>% CreateSeuratObject(project = name_list[10], min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = name_list[10])
+data_11 <- Read10X("WT_MI_D14_RR_1/outs/filtered_feature_bc_matrix") %>% CreateSeuratObject(project = name_list[11], min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = name_list[11])
+data_12 <- Read10X("WT_MI_D14_RR_2/outs/filtered_feature_bc_matrix") %>% CreateSeuratObject(project = name_list[12], min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = name_list[12])
+data_13 <- Read10X("WT_Sham_1/outs/filtered_feature_bc_matrix") %>% CreateSeuratObject(project = name_list[13], min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = name_list[13])
+data_14 <- Read10X("WT_Sham_2/outs/filtered_feature_bc_matrix") %>% CreateSeuratObject(project = name_list[14], min.cells = 0, min.features = 0) %>% RenameCells(add.cell.id = name_list[14])
 
 all <- merge(data_1, c(data_2, data_3, data_4, data_5, data_6, data_7, data_8, data_9, data_10, data_11, data_12, data_13, data_14))
 
