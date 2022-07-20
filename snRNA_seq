@@ -54,7 +54,8 @@ DimPlot(combined, reduction = "umap", pt.size = 1.5)
 DefaultAssay(combined) <- "RNA"
 
 CM <- subset(combined, idents = c("0"))
-CM <- FindVariableFeatures(CM, selection.method = "vst", nfeatures = 500) %>% ScaleData(features = rownames(CM)) %>% RunPCA(npcs = 30, features = VariableFeatures(CM)) %>% RunUMAP(reduction = "pca", dims = 1:5, umap.method = 'umap-learn') %>% FindNeighbors(reduction = "pca", dims = 1:5)
+CM <- FindVariableFeatures(CM, selection.method = "vst", nfeatures = 500) %>% ScaleData(features = rownames(CM))
+CM <- RunPCA(CM, npcs = 30, features = VariableFeatures(CM)) %>% RunUMAP(reduction = "pca", dims = 1:5, umap.method = 'umap-learn') %>% FindNeighbors(reduction = "pca", dims = 1:5)
 CM <- FindClusters(CM, resolution = 0.2)
 
 DimPlot(CM, reduction = "umap", pt.size = 1.5)
