@@ -45,7 +45,7 @@ features <- SelectIntegrationFeatures(object.list = all_list)
 all_anchors <- FindIntegrationAnchors(object.list = all_list, anchor.features = features)
 
 combined <- IntegrateData(anchorset = all_anchors)
-combined <- ScaleData(combined, features = rownames(all) %>% RunPCA(npcs = 30, features = VariableFeatures(combined)) %>% RunUMAP(reduction = "pca", dims = 1:20, umap.method = 'umap-learn') %>% FindNeighbors(reduction = "pca", dims = 1:20) 
+combined <- ScaleData(combined, features = rownames(all)) %>% RunPCA(npcs = 30, features = VariableFeatures(combined)) %>% RunUMAP(reduction = "pca", dims = 1:20, umap.method = 'umap-learn') %>% FindNeighbors(reduction = "pca", dims = 1:20) 
 
 combined <- FindClusters(combined, resolution = 0.25)
 
