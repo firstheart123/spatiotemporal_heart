@@ -10,13 +10,23 @@ name_list <- c("WT_Sham",
                "WT_MI_day14_1", "WT_MI_day14_2", "WT_MI_day14_3"
                )
                
-data_1 <- Load10X_Spatial(paste0(name_list[1]", "/outs"), slice = paste(name_list[1])) %>% RenameCells(add.cell.id = name_list[1])
-data_2 <- Load10X_Spatial(paste0(name_list[2]", "/outs"), slice = paste(name_list[2])) %>% RenameCells(add.cell.id = name_list[2])
-data_3 <- Load10X_Spatial(paste0(name_list[3]", "/outs"), slice = paste(name_list[3])) %>% RenameCells(add.cell.id = name_list[3])
-data_4 <- Load10X_Spatial(paste0(name_list[4]", "/outs"), slice = paste(name_list[4])) %>% RenameCells(add.cell.id = name_list[4])
-data_5 <- Load10X_Spatial(paste0(name_list[5]", "/outs"), slice = paste(name_list[5])) %>% RenameCells(add.cell.id = name_list[5])
-data_6 <- Load10X_Spatial(paste0(name_list[6]", "/outs"), slice = paste(name_list[6])) %>% RenameCells(add.cell.id = name_list[6])
-data_7 <- Load10X_Spatial(paste0(name_list[7]", "/outs"), slice = paste(name_list[7])) %>% RenameCells(add.cell.id = name_list[7])
-data_8 <- Load10X_Spatial(paste0(name_list[8]", "/outs"), slice = paste(name_list[8])) %>% RenameCells(add.cell.id = name_list[8])
-data_9 <- Load10X_Spatial(paste0(name_list[9]", "/outs"), slice = paste(name_list[9])) %>% RenameCells(add.cell.id = name_list[9])
-data_10 <- Load10X_Spatial(paste0(name_list[10]", "/outs"), slice = paste(name_list[10])) %>% RenameCells(add.cell.id = name_list[10])
+data_1 <- Load10X_Spatial(paste0(name_list[1]", "/outs"), slice = paste(name_list[1])) %>% RenameCells(add.cell.id = name_list[1]) %>% NormalizeData(normalization.method = "LogNormalize", scale.factor = 10000) %>% FindVariableFeatures(selection.method = "vst", nfeatures = 2000)
+data_2 <- Load10X_Spatial(paste0(name_list[2]", "/outs"), slice = paste(name_list[2])) %>% RenameCells(add.cell.id = name_list[2]) %>% NormalizeData(normalization.method = "LogNormalize", scale.factor = 10000) %>% FindVariableFeatures(selection.method = "vst", nfeatures = 2000)
+data_3 <- Load10X_Spatial(paste0(name_list[3]", "/outs"), slice = paste(name_list[3])) %>% RenameCells(add.cell.id = name_list[3]) %>% NormalizeData(normalization.method = "LogNormalize", scale.factor = 10000) %>% FindVariableFeatures(selection.method = "vst", nfeatures = 2000)
+data_4 <- Load10X_Spatial(paste0(name_list[4]", "/outs"), slice = paste(name_list[4])) %>% RenameCells(add.cell.id = name_list[4]) %>% NormalizeData(normalization.method = "LogNormalize", scale.factor = 10000) %>% FindVariableFeatures(selection.method = "vst", nfeatures = 2000)
+data_5 <- Load10X_Spatial(paste0(name_list[5]", "/outs"), slice = paste(name_list[5])) %>% RenameCells(add.cell.id = name_list[5]) %>% NormalizeData(normalization.method = "LogNormalize", scale.factor = 10000) %>% FindVariableFeatures(selection.method = "vst", nfeatures = 2000)
+data_6 <- Load10X_Spatial(paste0(name_list[6]", "/outs"), slice = paste(name_list[6])) %>% RenameCells(add.cell.id = name_list[6]) %>% NormalizeData(normalization.method = "LogNormalize", scale.factor = 10000) %>% FindVariableFeatures(selection.method = "vst", nfeatures = 2000)
+data_7 <- Load10X_Spatial(paste0(name_list[7]", "/outs"), slice = paste(name_list[7])) %>% RenameCells(add.cell.id = name_list[7]) %>% NormalizeData(normalization.method = "LogNormalize", scale.factor = 10000) %>% FindVariableFeatures(selection.method = "vst", nfeatures = 2000)
+data_8 <- Load10X_Spatial(paste0(name_list[8]", "/outs"), slice = paste(name_list[8])) %>% RenameCells(add.cell.id = name_list[8]) %>% NormalizeData(normalization.method = "LogNormalize", scale.factor = 10000) %>% FindVariableFeatures(selection.method = "vst", nfeatures = 2000)
+data_9 <- Load10X_Spatial(paste0(name_list[9]", "/outs"), slice = paste(name_list[9])) %>% RenameCells(add.cell.id = name_list[9]) %>% NormalizeData(normalization.method = "LogNormalize", scale.factor = 10000) %>% FindVariableFeatures(selection.method = "vst", nfeatures = 2000)
+data_10 <- Load10X_Spatial(paste0(name_list[10]", "/outs"), slice = paste(name_list[10])) %>% RenameCells(add.cell.id = name_list[10]) %>% NormalizeData(normalization.method = "LogNormalize", scale.factor = 10000) %>% FindVariableFeatures(selection.method = "vst", nfeatures = 2000)
+
+object_list <- c(data_1, data_2, data_3, data_4, data_5, data_6, data_7, data_8, data_9, data_10) 
+
+anchors <- FindIntegrationAnchors(object.list = object_list, dims = 1:20)
+
+merge <- IntegrateData(anchorset = anchors, dims = 1:20) %>% ScaleData() %>% RunPCA() %>% RunUMAP(reduction = "pca", dims = 1:30, umap.method = 'umap-learn') %>% FindNeighbors(reduction = "pca", dims = 1:30) %>% FindClusters(resolution = 0.20)
+ 
+ DimPlot(merge, reduction = "umap", label = TRUE, label.size = 15, group.by = "orig.ident", pt.size = 0.8)
+ 
+ 
